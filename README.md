@@ -70,11 +70,30 @@ A documentação da API é gerada automaticamente e pode ser acessada através d
 
 [Documentação Swagger](http://localhost:8000/api/documentation)
 
-## URL de Acesso
+## Execução com Docker
 
-O projeto está disponível no seguinte endereço:
+1. Configure as Variáveis de Ambiente
 
-- https://laravel-teste-tecnico-via-cep.onrender.com
+Crie um arquivo .env e configure as variáveis de ambiente.
+
+```bash
+DB_CONNECTION=your_db_connection
+DB_HOST=your_db_host
+DB_PORT=your_db_port
+DB_DATABASE=your_db_database
+DB_USERNAME=your_db_username
+DB_PASSWORD=your_db_password
+```
+
+2. Construa e Inicie os Contêineres
+
+Execute o comando a seguir para construir a imagem Docker e iniciar os contêineres definidos no docker-compose.yml:
+
+```bash
+docker-compose up --build
+```
+
+Isso iniciará a aplicação e o banco de dados. A aplicação estará disponível em http://localhost:8000.
 
 ## Testes
 
