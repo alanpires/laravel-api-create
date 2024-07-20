@@ -27,8 +27,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Verifique o Composer
 RUN composer --version
 
-# Instale as dependências do Composer
-RUN composer install --no-dev --optimize-autoloader \
+# Instale as dependências do Composer e exiba a saída detalhada
+RUN composer install --no-dev --optimize-autoloader --verbose \
     || { echo 'Composer install failed'; exit 1; }
 
 # Exponha a porta que o servidor vai rodar
