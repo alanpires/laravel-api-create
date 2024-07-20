@@ -1,5 +1,5 @@
 # Use a imagem oficial do PHP
-FROM php:8.1-fpm
+FROM php:8.0-fpm
 
 # Instale dependências e extensões necessárias
 RUN apt-get update && apt-get install -y \
@@ -24,10 +24,10 @@ COPY . .
 # Instale o Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Verifique o Composer
+# Verifique a versão do Composer
 RUN composer --version
 
-# Instale as dependências do Composer e exiba a saída detalhada
+# Instale as dependências do Composer e capture a saída detalhada
 RUN composer install --no-dev --optimize-autoloader --verbose \
     || { echo 'Composer install failed'; exit 1; }
 
