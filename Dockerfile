@@ -24,15 +24,14 @@ WORKDIR /var/www/html
 # Copie os arquivos da aplicação para o contêiner
 COPY . .
 
+# Defina as permissões corretas no diretório de trabalho
+RUN chown -R www-data:www-data /var/www/html
+
 # Instale o Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Verifique a versão do Composer
 RUN composer --version
-
-# Limpe o cache do Composer e gere o autoload
-RUN composer clear-cache
-RUN composer dump-autoload -o
 
 # Instale as dependências do Composer
 RUN composer install --no-dev --optimize-autoloader --verbose
