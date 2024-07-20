@@ -30,9 +30,11 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Verifique a versão do Composer
 RUN composer --version
 
+# Limpe o cache do Composer e gere o autoload
+RUN composer clear-cache && composer dump-autoload -o
+
 # Instale as dependências do Composer
-RUN composer install --no-dev --optimize-autoloader --verbose \
-    || { echo 'Composer install failed'; exit 1; }
+RUN composer install --no-dev --optimize-autoloader --verbose
 
 # Adicione o script de implantação e torne-o executável
 COPY deploy.sh /usr/local/bin/deploy.sh
