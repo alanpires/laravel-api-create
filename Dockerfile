@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-enable xdebug
 
 # Defina o diretório de trabalho
-WORKDIR /var/www
+WORKDIR /var/www/html
 
 # Copie os arquivos da aplicação para o contêiner
 COPY . .
@@ -27,12 +27,19 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Verifique a versão do Composer
 RUN composer --version
 
-# Instale as dependências do Composer e capture a saída detalhada
+# Instale as dependências do Composer
 RUN composer install --no-dev --optimize-autoloader --verbose \
     || { echo 'Composer install failed'; exit 1; }
+
+# Adicione o script de implantação e torne-o executável
+COPY deploy.sh /usr/local/bin/deploy.sh
+RUN chmod +x /usr/local/bin/deploy.sh
 
 # Exponha a porta que o servidor vai rodar
 EXPOSE 9000
 
 # Inicie o PHP-FPM
 CMD ["php-fpm"]
+
+# Execute o script de implantação após iniciar o contêiner
+ENTRYPOINT ["/usr/local/bin/deploy.sh"]
