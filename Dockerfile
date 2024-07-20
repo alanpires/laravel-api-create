@@ -22,9 +22,6 @@ WORKDIR /var/www
 # Copie os arquivos da aplicação para o contêiner
 COPY . .
 
-# Copie o script de implantação para o contêiner
-COPY deploy.sh /usr/local/bin/deploy.sh
-
 # Instale o Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -42,10 +39,11 @@ RUN composer install --no-dev --optimize-autoloader --verbose \
 EXPOSE 8080
 
 # Dê permissões de execução ao script de implantação
+COPY deploy.sh /usr/local/bin/deploy.sh
 RUN chmod +x /usr/local/bin/deploy.sh
 
 # Configure o script de implantação como o ponto de entrada
 ENTRYPOINT ["/usr/local/bin/deploy.sh"]
 
 # Inicie o PHP-FPM
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
+CMD ["php-fpm"]
