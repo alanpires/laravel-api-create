@@ -52,9 +52,9 @@ class ApiViaCepController extends Controller
      *             @OA\Items(
      *                 type="object",
      *                 @OA\Property(property="cep", type="string"),
+     *                 @OA\Property(property="label", type="string"),
      *                 @OA\Property(property="logradouro", type="string"),
      *                 @OA\Property(property="complemento", type="string"),
-     *                 @OA\Property(property="unidade", type="string"),
      *                 @OA\Property(property="bairro", type="string"),
      *                 @OA\Property(property="localidade", type="string"),
      *                 @OA\Property(property="uf", type="string"),
