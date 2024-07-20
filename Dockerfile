@@ -24,8 +24,12 @@ COPY . .
 # Instale o Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# Verifique o Composer
+RUN composer --version
+
 # Instale as dependências do Composer
-RUN composer install --optimize-autoloader --no-dev
+RUN composer install --no-dev --optimize-autoloader \
+    || { echo 'Composer install failed'; exit 1; }
 
 # Exponha a porta que o servidor vai rodar
 EXPOSE 9000
