@@ -1,8 +1,5 @@
-# Use a imagem oficial do PHP
-FROM php:8.0-fpm
-
-# Defina a variável de ambiente para permitir o uso de plugins como root
-ENV COMPOSER_ALLOW_SUPERUSER=1
+# Use a imagem oficial do PHP 8.2
+FROM php:8.2-fpm
 
 # Instale dependências e extensões necessárias
 RUN apt-get update && apt-get install -y \
@@ -19,32 +16,35 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-enable xdebug
 
 # Defina o diretório de trabalho
-WORKDIR /var/www/html
+WORKDIR /var/www
 
 # Copie os arquivos da aplicação para o contêiner
 COPY . .
 
-# Defina as permissões corretas no diretório de trabalho
-RUN chown -R www-data:www-data /var/www/html
+# Copie o script de implantação para o contêiner
+COPY deploy.sh /usr/local/bin/deploy.sh
 
 # Instale o Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Defina a variável de ambiente para permitir plugins do Composer
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
 # Verifique a versão do Composer
 RUN composer --version
 
 # Instale as dependências do Composer
-RUN composer install --no-dev --optimize-autoloader --verbose
-
-# Adicione o script de implantação e torne-o executável
-COPY deploy.sh /usr/local/bin/deploy.sh
-RUN chmod +x /usr/local/bin/deploy.sh
+RUN composer install --no-dev --optimize-autoloader --verbose \
+    || { echo 'Composer install failed'; exit 1; }
 
 # Exponha a porta que o servidor vai rodar
 EXPOSE 9000
 
+# Dê permissões de execução ao script de implantação
+RUN chmod +x /usr/local/bin/deploy.sh
+
+# Configure o script de implantação como o ponto de entrada
+ENTRYPOINT ["/usr/local/bin/deploy.sh"]
+
 # Inicie o PHP-FPM
 CMD ["php-fpm"]
-
-# Execute o script de implantação após iniciar o contêiner
-ENTRYPOINT ["/usr/local/bin/deploy.sh"]
