@@ -31,7 +31,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN composer --version
 
 # Limpe o cache do Composer e gere o autoload
-RUN composer clear-cache && composer dump-autoload -o
+RUN composer clear-cache
+RUN composer dump-autoload -o
 
 # Instale as dependências do Composer
 RUN composer install --no-dev --optimize-autoloader --verbose
