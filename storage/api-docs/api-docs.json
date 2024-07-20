@@ -1,0 +1,124 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Teste Técnico - API Via CEP",
+        "description": "This is a sample API documentation.",
+        "contact": {
+            "email": "alancpires01@gmail.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/search/local/{values}": {
+            "get": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Get addresses by CEP",
+                "description": "Returns a list of addresses based on the provided CEP values.",
+                "operationId": "502d21272c4e126aae4489848497acc1",
+                "parameters": [
+                    {
+                        "name": "values",
+                        "in": "path",
+                        "description": "Comma-separated list of CEP values",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of addresses",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "cep": {
+                                                "type": "string"
+                                            },
+                                            "logradouro": {
+                                                "type": "string"
+                                            },
+                                            "complemento": {
+                                                "type": "string"
+                                            },
+                                            "unidade": {
+                                                "type": "string"
+                                            },
+                                            "bairro": {
+                                                "type": "string"
+                                            },
+                                            "localidade": {
+                                                "type": "string"
+                                            },
+                                            "uf": {
+                                                "type": "string"
+                                            },
+                                            "ibge": {
+                                                "type": "string"
+                                            },
+                                            "gia": {
+                                                "type": "string"
+                                            },
+                                            "ddd": {
+                                                "type": "string"
+                                            },
+                                            "siafi": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error or failed to fetch data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Addresses",
+            "description": "Addresses"
+        }
+    ]
+}

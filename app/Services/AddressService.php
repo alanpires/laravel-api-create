@@ -12,7 +12,7 @@ class AddressService
         $parts = explode(',', $values);
         $reversedParts = array_reverse($parts);
         $results = [];
-        $errors = [];
+        $errors = "";
 
         foreach($reversedParts as $cep) {
             $url = "https://viacep.com.br/ws/{$cep}/json/";
@@ -23,16 +23,16 @@ class AddressService
                 if ($response->successful()) {
                     array_push($results, $response->json());
                 } else {
-                    $errors[$cep] = 'Failed to fetch data for CEP: ' . $cep;
+                    $errors = 'Failed to fetch data for CEP: ' . $cep;
                 }
             } catch (\Exception $e) {
-                $errors[$cep] = 'Exception occurred: ' . $e->getMessage();
+                $errors = 'Exception occurred: ' . $e->getMessage();
             }
         };
 
         if (!empty($errors)) {
             throw new HttpResponseException(
-                response()->json(['errors' => $errors], 422)
+                response()->json(['error' => $errors], 422)
             );
         }
 

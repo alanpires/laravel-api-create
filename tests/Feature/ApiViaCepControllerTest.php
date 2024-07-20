@@ -85,9 +85,7 @@ class ApiViaCepControllerTest extends TestCase
 
         $response->assertStatus(422);
         $response->assertJson([
-            'errors' => [
-                'invalid-cep' => 'Failed to fetch data for CEP: invalid-cep'
-            ]
+            'error' => 'Failed to fetch data for CEP: invalid-cep'
         ]);
     }
 
