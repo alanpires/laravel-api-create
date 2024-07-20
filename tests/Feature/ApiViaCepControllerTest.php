@@ -18,9 +18,9 @@ class ApiViaCepControllerTest extends TestCase
                            ->andReturn([
                                [
                                    "cep" => "87033-270",
+                                   "label" => "Rua Uruguai, Maringá",
                                    "logradouro" => "Rua Uruguai",
                                    "complemento" => "",
-                                   "unidade" => "",
                                    "bairro" => "Jardim Alvorada",
                                    "localidade" => "Maringá",
                                    "uf" => "PR",
@@ -31,9 +31,9 @@ class ApiViaCepControllerTest extends TestCase
                                ],
                                [
                                    "cep" => "86990-000",
+                                   "label" => ", Marialva",
                                    "logradouro" => "",
                                    "complemento" => "",
-                                   "unidade" => "",
                                    "bairro" => "",
                                    "localidade" => "Marialva",
                                    "uf" => "PR",
@@ -52,9 +52,9 @@ class ApiViaCepControllerTest extends TestCase
         $response->assertJson([
             [
                 "cep" => "87033-270",
+                "label" => "Rua Uruguai, Maringá",
                 "logradouro" => "Rua Uruguai",
                 "complemento" => "",
-                "unidade" => "",
                 "bairro" => "Jardim Alvorada",
                 "localidade" => "Maringá",
                 "uf" => "PR",
@@ -65,9 +65,9 @@ class ApiViaCepControllerTest extends TestCase
             ],
             [
                 "cep" => "86990-000",
+                "label" => ", Marialva",
                 "logradouro" => "",
                 "complemento" => "",
-                "unidade" => "",
                 "bairro" => "",
                 "localidade" => "Marialva",
                 "uf" => "PR",
@@ -93,13 +93,13 @@ class ApiViaCepControllerTest extends TestCase
     {
         $mockAddressService = Mockery::mock(AddressService::class);
         $mockAddressService->shouldReceive('getAddresses')
-                        ->with('87033-270,86990000')
+                        ->with('86990000,87033-270')
                         ->andReturn([
                             [
                                 "cep" => "87033-270",
+                                "label" => "Rua Uruguai, Maringá",
                                 "logradouro" => "Rua Uruguai",
                                 "complemento" => "",
-                                "unidade" => "",
                                 "bairro" => "Jardim Alvorada",
                                 "localidade" => "Maringá",
                                 "uf" => "PR",
@@ -110,9 +110,9 @@ class ApiViaCepControllerTest extends TestCase
                             ],
                             [
                                 "cep" => "86990-000",
+                                "label" => ", Marialva",
                                 "logradouro" => "",
                                 "complemento" => "",
-                                "unidade" => "",
                                 "bairro" => "",
                                 "localidade" => "Marialva",
                                 "uf" => "PR",
@@ -125,15 +125,15 @@ class ApiViaCepControllerTest extends TestCase
 
         $this->app->instance(AddressService::class, $mockAddressService);
 
-        $response = $this->get('/search/local/87033-270,86990000');
+        $response = $this->get('/search/local/86990000,87033-270');
         
         $response->assertStatus(200);
         $response->assertJson([
             [
                 "cep" => "87033-270",
+                "label" => "Rua Uruguai, Maringá",
                 "logradouro" => "Rua Uruguai",
                 "complemento" => "",
-                "unidade" => "",
                 "bairro" => "Jardim Alvorada",
                 "localidade" => "Maringá",
                 "uf" => "PR",
@@ -144,9 +144,9 @@ class ApiViaCepControllerTest extends TestCase
             ],
             [
                 "cep" => "86990-000",
+                "label" => ", Marialva",
                 "logradouro" => "",
                 "complemento" => "",
-                "unidade" => "",
                 "bairro" => "",
                 "localidade" => "Marialva",
                 "uf" => "PR",
