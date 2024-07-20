@@ -1,9 +1,16 @@
 services:
   - type: web
-    name: my-laravel-app
+    name: laravel-app
     env: docker
-    dockerfile: Dockerfile
-    buildCommand: ""
-    startCommand: "php-fpm"
-    regions:
-      - oregon
+    buildCommand: docker-compose build app
+    startCommand: docker-compose up app
+    dockerfilePath: Dockerfile
+    port: 8080
+
+  - type: web
+    name: nginx
+    env: docker
+    buildCommand: docker-compose build nginx
+    startCommand: docker-compose up nginx
+    dockerfilePath: Dockerfile
+    port: 80
