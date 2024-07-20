@@ -15,15 +15,17 @@ RUN apt-get update && apt-get install -y \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug
 
-# Define o diretório de trabalho
+# Defina o diretório de trabalho
 WORKDIR /var/www
 
 # Copie os arquivos da aplicação para o contêiner
 COPY . .
 
+# Instale o Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
 # Instale as dependências do Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && composer install --optimize-autoloader --no-dev
+RUN composer install --optimize-autoloader --no-dev
 
 # Exponha a porta que o servidor vai rodar
 EXPOSE 9000
