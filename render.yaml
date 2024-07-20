@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: my-laravel-app
+    env: docker
+    dockerfile: Dockerfile
+    buildCommand: ""
+    startCommand: "php-fpm"
+    regions:
+      - oregon
