@@ -91,7 +91,12 @@ class ApiViaCepController extends Controller
         } catch (HttpResponseException $e) {
             return $e->getResponse();
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            \Log::error('Unexpected error occurred while fetching addresses.', [
+                'exception' => $e,
+                'values' => $values,
+            ]);
+
+            return response()->json(['error' => 'Unexpected error occurred. Please try again later.'], 500);
         }
     }
 }

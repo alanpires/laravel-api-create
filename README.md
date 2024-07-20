@@ -70,6 +70,12 @@ A documentação da API é gerada automaticamente e pode ser acessada através d
 
 [Documentação Swagger](http://localhost:8000/api/documentation)
 
+## URL de Acesso
+
+O projeto está disponível no seguinte endereço:
+
+- https://laravel-teste-tecnico-via-cep.onrender.com
+
 ## Testes
 
 Para rodar os testes automatizados, use:

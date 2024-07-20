@@ -39,7 +39,7 @@ RUN composer install --no-dev --optimize-autoloader --verbose \
     || { echo 'Composer install failed'; exit 1; }
 
 # Exponha a porta que o servidor vai rodar
-EXPOSE 9000
+EXPOSE 8080
 
 # Dê permissões de execução ao script de implantação
 RUN chmod +x /usr/local/bin/deploy.sh
@@ -48,4 +48,4 @@ RUN chmod +x /usr/local/bin/deploy.sh
 ENTRYPOINT ["/usr/local/bin/deploy.sh"]
 
 # Inicie o PHP-FPM
-CMD ["php-fpm"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
