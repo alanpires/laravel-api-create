@@ -91,7 +91,7 @@ class ApiViaCepController extends Controller
         } catch (HttpResponseException $e) {
             return $e->getResponse();
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Unexpected error occurred'], 500);
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 }

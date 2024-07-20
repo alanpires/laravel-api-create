@@ -10,8 +10,9 @@ RUN apt-get update && apt-get install -y \
     unzip \
     libxml2-dev \
     git \
+    libpq-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd zip pdo pdo_mysql \
+    && docker-php-ext-install gd zip pdo pdo_pgsql \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug
 
